@@ -1,6 +1,6 @@
 {
     "name": "TurboVax",
-    "version": "0.9",
+    "version": "0.9.1",
     "description": "Assists with securing a vaccine appointment from the MD massvax sites.",
     "permissions": [
     ],

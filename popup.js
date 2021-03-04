@@ -6,7 +6,7 @@ $(document).ready(function () {
         chrome.tabs.create({ url: 'https://www.umms.org/coronavirus/covid-vaccine/get-vaccine/mtb-stadium/verification' });
     });
     $("#beer").click(function () {
-        chrome.tabs.create({ url: 'http://paypal.me/jwomeara' });
+        chrome.tabs.create({ url: 'https://www.paypal.com/paypalme/jwomeara' });
     });
     $("#github").click(function () {
         chrome.tabs.create({ url: 'https://github.com/jwosoft/TurboVax' });
