@@ -1,0 +1,58 @@
+{
+    "name": "TurboVax",
+    "version": "0.8",
+    "description": "Assists with securing a vaccine appointment from the MD massvax sites.",
+    "permissions": [
+    ],
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "icons": {
+        "16": "16.png",
+        "48": "48.png",
+        "128": "128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://massvax.maryland.gov/*"
+            ],
+            "js": [
+                "lib/js/jquery-3.5.1.min.js",
+                "massvax.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://www.umms.org/coronavirus/covid-vaccine/get-vaccine/mtb-stadium/verification",
+                "https://www.umms.org/coronavirus/covid-vaccine/get-vaccine/mtb-stadium/verification/*"
+            ],
+            "js": [
+                "lib/js/jquery-3.5.1.min.js",
+                "umms.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://signupandschedule.umm.edu/mychart/SignUpAndSchedule/EmbeddedSchedule?id=RES^84002860&VT=22759",
+                "https://signupandschedule.umm.edu/mychart/SignUpAndSchedule/EmbeddedSchedule*"
+            ],
+            "js": [
+                "lib/js/jquery-3.5.1.min.js",
+                "umms-iframe.js"
+            ],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        "turbo-time.mp3",
+        "put-cookie-down.mp3"
+    ],
+    "manifest_version": 2
+}
