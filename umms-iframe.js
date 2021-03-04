@@ -21,17 +21,24 @@ log = function(message) {
 log("iframe content script injected");
 
 // number of attempts before giving up
+var countdown = 10;
+
 var baseInterval = setInterval(function() {
-    if ($("div:contains('Loading...')") > 0) {
-        log("iframe is loading");
-    } else {
-        // if we hit on this, nothing was found
-        if ($("span:contains('Sorry, we couldn\\'t find any open appointments.')").length > 0) {
-            log("iframe sees no open appointments - sending refresh");
+    var loading = $("div:contains('Loading...')");
+    if (loading.is(":hidden")) {
+        var sorryVisible = $("span:contains('Sorry, we couldn\\'t find any open appointments.')");
+        sorryVisible = sorryVisible.length > 0 && sorryVisible.is(":visible");
+
+        // if we find appointment times, send a notification
+        if ($(".subslotslist").length > 0) {
+            log("iframe sees open appointments");
+            chrome.runtime.sendMessage({sendBack: true, data: {apptsFound: true}});
+        }
+        // if we don't see any appointments
+        else if (sorryVisible || countdown-- == 0) {
+            log("iframe sees no open appointments");
             // Send message to top frame, for example:
-            chrome.runtime.sendMessage({sendBack:true, data:{refresh: true}});
-        } else {
-            log("iframe isn't loading, and doesn't say there are no appointments");
+            chrome.runtime.sendMessage({sendBack: true, data: {apptsFound: false}});
         }
     }
-}, 1000);
+}, 500);

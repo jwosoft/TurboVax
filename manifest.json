@@ -1,6 +1,6 @@
 {
     "name": "TurboVax",
-    "version": "0.8",
+    "version": "0.9",
     "description": "Assists with securing a vaccine appointment from the MD massvax sites.",
     "permissions": [
     ],
@@ -14,9 +14,9 @@
         "persistent": false
     },
     "icons": {
-        "16": "16.png",
-        "48": "48.png",
-        "128": "128.png"
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
     },
     "content_scripts": [
         {
@@ -51,8 +51,8 @@
         }
     ],
     "web_accessible_resources": [
-        "turbo-time.mp3",
-        "put-cookie-down.mp3"
+        "audio/turbo-time.mp3",
+        "audio/put-cookie-down.mp3"
     ],
     "manifest_version": 2
 }

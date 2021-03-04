@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#sixFlags").click(function () {
+    $("#massvax").click(function () {
         chrome.tabs.create({ url: 'https://massvax.maryland.gov/' });
     });
     $("#mtBank").click(function () {
@@ -7,5 +7,8 @@ $(document).ready(function () {
     });
     $("#beer").click(function () {
         chrome.tabs.create({ url: 'http://paypal.me/jwomeara' });
+    });
+    $("#github").click(function () {
+        chrome.tabs.create({ url: 'https://github.com/jwosoft/TurboVax' });
     });
 });

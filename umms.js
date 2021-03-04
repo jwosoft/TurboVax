@@ -21,13 +21,15 @@ log = function(message) {
 
 log("content script injected");
 
-var turboTimeAudio = new Audio(chrome.runtime.getURL("turbo-time.mp3"));
-var cookieDownAudio = new Audio(chrome.runtime.getURL("put-cookie-down.mp3"));
+var turboTimeAudio = new Audio(chrome.runtime.getURL("audio/turbo-time.mp3"));
+var cookieDownAudio = new Audio(chrome.runtime.getURL("audio/put-cookie-down.mp3"));
 
-var refresh = false;
+var msgReceived = false;
+var apptsFound = false;
 
-chrome.runtime.onMessage.addListener(function(details) {
-    refresh = details.refresh;
+chrome.runtime.onMessage.addListener(function(message) {
+    msgReceived = true;
+    apptsFound = message.apptsFound;
 });
 
 var isRunning = false;
@@ -41,23 +43,19 @@ $(turboHtml).insertBefore($("#scheduleContainer"));
 $("#start").click(function() {isRunning = true;});
 $("#stop").click(function() {isRunning = false;});
 
-var countdownStart = 10;
-var countdown = countdownStart;
 var baseInterval = setInterval(function() {
     if ($("#choice-dollar").is(":checked") && isRunning) {
-        if (refresh == true) {
-            refresh = false;
-            countdown = countdownStart;
-            log("no appointments available, refreshing the iframe");
-            $('#openSchedulingFrame').attr('src', function (i, val){return val;});
-        } else {
-            log ("counting down " + countdown);
-            if (countdown-- == 0) {
+        if (msgReceived) {
+            msgReceived = false;
+            if (apptsFound){
                 isRunning = false;
-                log("might have found something!");
+                log("found appointments");
                 turboTimeAudio.play();
                 alert("Pick your appointment time!");
+            } else {
+                log("no appointments found");
+                $('#openSchedulingFrame').attr('src', function (i, val){return val;});
             }
         }
     }
-}, 1000);
+}, 500);

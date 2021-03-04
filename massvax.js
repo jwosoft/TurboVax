@@ -127,8 +127,8 @@ stop = function() {
     }
 }
 
-var turboTimeAudio = new Audio(chrome.runtime.getURL("turbo-time.mp3"));
-var cookieDownAudio = new Audio(chrome.runtime.getURL("put-cookie-down.mp3"));
+var turboTimeAudio = new Audio(chrome.runtime.getURL("audio/turbo-time.mp3"));
+var cookieDownAudio = new Audio(chrome.runtime.getURL("audio/put-cookie-down.mp3"));
 check = function(){
     log("check");
     if ($(".calendar").parent().children().length > 1) {
