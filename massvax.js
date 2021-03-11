@@ -5,20 +5,42 @@
 // For the first phase, when the user reaches the location search/select pages, if the user
 // has checked the box to automatically retry, we will continue to use the address entered
 // by the user to check for an available vaccination site.  Once one is found, we will stop
-// retrying, disable the retry flag, and send an alert to the user letting them know that 
+// retrying, disable the retry flag, and send an alert to the user letting them know that
 // an appointment site is available.
 
 // For the second phase, when the user reaces the appointment select page, if the user clicks
-// start, we will begin checking toggling between the current and next month by clicking the 
-// calendar switching buttons on the page.  When an appointment is found, we will stop retrying, 
-// and alert the user to let them know that an appointment is available.  
+// start, we will begin checking toggling between the current and next month by clicking the
+// calendar switching buttons on the page.  When an appointment is found, we will stop retrying,
+// and alert the user to let them know that an appointment is available.
 
 var debug = false;
 log = function(message) {
     if (debug) {
         console.log(message);
     }
-}
+};
+
+var alertTitle = null;
+var origTitle = null;
+var alertInterval = null;
+var alertTab = function(alertMsg) {
+    alertTitle = alertMsg;
+    origTitle = document.title;
+
+    alertInterval = setInterval(function() {
+        document.title = (document.title == alertTitle) ? origTitle : alertTitle;
+    }, 1000);
+};
+
+$(document).mousemove(function(event){
+    if (alertInterval != null) {
+        clearInterval(alertInterval);
+        alertInterval = null;
+        document.title = origTitle;
+        alertTitle = null;
+        origTitle = null;
+    }
+});
 
 log("content script injected");
 
@@ -38,7 +60,7 @@ numToMonth = function(monthNum) {
             monthName = "April";
             break;
         case 4:
-            monthName = "May"; 
+            monthName = "May";
             break;
         case 5:
             monthName = "June";
@@ -80,7 +102,7 @@ monthToNum = function(monthName) {
             monthNum = 3;
             break;
         case "May":
-            monthNum = 4; 
+            monthNum = 4;
             break;
         case "June":
             monthNum = 5;
@@ -129,13 +151,49 @@ stop = function() {
 
 var turboTimeAudio = new Audio(chrome.runtime.getURL("audio/turbo-time.mp3"));
 var cookieDownAudio = new Audio(chrome.runtime.getURL("audio/put-cookie-down.mp3"));
+var motionTrackerAudio = new Audio(chrome.runtime.getURL("audio/motion-tracker.mp3"));
+var arnoldAlerts = true;
+
+let updateAlertType = function() {
+    if (typeof browser !== "undefined") {
+        let getArnoldAlerts = browser.storage.sync.get(["arnoldAlerts"]);
+        getArnoldAlerts.then(
+            function(item){
+                arnoldAlerts = item.arnoldAlerts;
+            },
+            function(error){
+                log(error);
+            });
+    } else {
+        chrome.storage.sync.get(["arnoldAlerts"], function(item) {
+            arnoldAlerts = item.arnoldAlerts;
+        });
+    }
+}
+
+var apptAudioAlert = function() {
+    if (arnoldAlerts) {
+        turboTimeAudio.play();
+    } else {
+        motionTrackerAudio.play();
+    }
+}
+
+var locAudioAlert = function() {
+    if (arnoldAlerts) {
+        cookieDownAudio.play();
+    } else {
+        motionTrackerAudio.play();
+    }
+}
+
 check = function(){
     log("check");
     if ($(".calendar").parent().children().length > 1) {
         log("appointments found");
         stop();
-        turboTimeAudio.play();
-        alert("Pick your appointment time!");
+        apptAudioAlert();
+        alertTab("TurboVax Alert");
     }
 
     var direction = getDirection();
@@ -193,6 +251,9 @@ isLoading = function() {
 var autoRetry = false;
 var lastUrl = "";
 setInterval(function() {
+    // check the notification alerts
+    updateAlertType();
+
     log("URL: " + location.href);
     if (location.href.endsWith("appointment-select") && !lastUrl.endsWith("appointment-select")){
         var appSelInterval = setInterval(function() {
@@ -268,8 +329,8 @@ setInterval(function() {
                     clearInterval(locSelInterval);
                     log("sites found");
                     autoRetry = false;
-                    cookieDownAudio.play();
-                    alert("Pick your appointment site!")
+                    locAudioAlert();
+                    alertTab("TurboVax Alert");
                 } else if ($("p:contains('There are no locations nearby that have availability.')").length == 1) {
                     clearInterval(locSelInterval);
                     log("Going back!");

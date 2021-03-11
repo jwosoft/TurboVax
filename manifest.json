@@ -3,6 +3,7 @@
     "version": "0.9.1",
     "description": "Assists with securing a vaccine appointment from the MD massvax sites.",
     "permissions": [
+        "storage"
     ],
     "browser_action": {
         "default_popup": "popup.html"
@@ -52,7 +53,8 @@
     ],
     "web_accessible_resources": [
         "audio/turbo-time.mp3",
-        "audio/put-cookie-down.mp3"
+        "audio/put-cookie-down.mp3",
+        "audio/motion-tracker.mp3"
     ],
     "manifest_version": 2
 }
