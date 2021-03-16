@@ -1,14 +1,20 @@
-chrome.runtime.onMessage.addListener(function (message, sender) {
-    if (message.sendBack) {
-        console.log("refresh message received");
-        chrome.tabs.sendMessage(sender.tab.id, message);
-    }
-});
-
-var arnoldAlerts = false;
+// set initial notification type
 if (typeof browser !== "undefined") {
-    browser.storage.sync.set({"arnoldAlerts": arnoldAlerts});
+    let getArnoldAlerts = browser.storage.sync.get(["arnoldAlerts"]);
+    getArnoldAlerts.then(
+        function(item){
+            if (typeof item.arnoldAlerts === "undefined") {
+                browser.storage.sync.set({"arnoldAlerts": true});
+            }
+        },
+        function(error){
+            console.log(error);
+        });
+
 } else {
-    console.log("setting alert type");
-    chrome.storage.sync.set({"arnoldAlerts": arnoldAlerts}, function(){});
+    chrome.storage.sync.get(["arnoldAlerts"], function(item) {
+        if (typeof item.arnoldAlerts === "undefined") {
+            chrome.storage.sync.set({"arnoldAlerts": true}, function(){});
+        }
+    });
 }

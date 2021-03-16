@@ -28,33 +28,12 @@
                 "lib/js/jquery-3.5.1.min.js",
                 "massvax.js"
             ]
-        },
-        {
-            "matches": [
-                "https://www.umms.org/coronavirus/covid-vaccine/get-vaccine/mtb-stadium/verification",
-                "https://www.umms.org/coronavirus/covid-vaccine/get-vaccine/mtb-stadium/verification/*"
-            ],
-            "js": [
-                "lib/js/jquery-3.5.1.min.js",
-                "umms.js"
-            ]
-        },
-        {
-            "matches": [
-                "https://signupandschedule.umm.edu/mychart/SignUpAndSchedule/EmbeddedSchedule?id=RES^84002860&VT=22759",
-                "https://signupandschedule.umm.edu/mychart/SignUpAndSchedule/EmbeddedSchedule*"
-            ],
-            "js": [
-                "lib/js/jquery-3.5.1.min.js",
-                "umms-iframe.js"
-            ],
-            "all_frames": true
         }
     ],
     "web_accessible_resources": [
-        "audio/turbo-time.mp3",
-        "audio/put-cookie-down.mp3",
-        "audio/motion-tracker.mp3"
+        "audio/turbo-time.wav",
+        "audio/put-cookie-down.wav",
+        "audio/motion-tracker.wav"
     ],
     "manifest_version": 2
 }

@@ -7,26 +7,60 @@
 </head>
 
 <body>
-    <div class="container-fluid" style="min-width: 600px">
+    <div class="container-fluid" style="min-width: 600px; max-width: 600px;">
         <div id="overview" class="pages">
             <div class="row" style="border-bottom: 1px solid #000; background-color: #ddd">
-                <div class="col">
+                <div class="col pt-1">
                     <h3>TurboVax v0.10.0</h3>
+                </div>
+                <div class="col pt-1" style="text-align: right;">
+                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#settingsModal"
+                        id="settings"><i class="fas fa-cog fa-lg"></i></button>
+                    <!-- <a role="button"><i class="fas fa-cog fa-2x"></i></a> -->
                 </div>
             </div>
             <div class="row">
                 <div class="col-4 p-2" style="border-right: 1px solid #000;">
                     <button type="button" class="btn btn-primary btn-sm btn-block" id="massvax">MD Mass Vax</button>
-                    <button type="button" class="btn btn-primary btn-sm btn-block" id="mtBank">UMMS</button>
                 </div>
                 <div class="col-8">
-                    <p>Select a vaccination website and follow the prompts.  TurboVax will pop in and help where it can.</p>
-                    <p><strong>MD Mass Vax</strong> includes multiple locations like Six Flags, Regency Furniture Stadium, etc.</p>
-                    <p><strong>UMMS</strong> only includes the M&T Bank Stadium location.</p>
+                    <p>Select a vaccination website and follow the prompts. TurboVax will pop in and help where it can.
+                    </p>
                     <p>If this extension helps you book an appointment,<br><a id="beer" href="#">buy me a beer!</a></p>
                     <p>Help me by contributing on <a id="github" href="#">GitHub</a><br>
-                    Leave Feedback: <a href="mailto:j.wo.soft@gmail.com">j.wo.soft@gmail.com</a><br>
-                    Last Updated: 3/11/2020</p>
+                        Leave Feedback: <a href="mailto:j.wo.soft@gmail.com">j.wo.soft@gmail.com</a><br>
+                        Last Updated: 3/16/2020</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="notificationSelect">Notification Type</label>
+                        <div class="form-inline">
+                            <select class="form-control mr-1" id="notificationSelect">
+                                <option>Turbo Man</option>
+                                <option>Motion Tracker</option>
+                            </select>
+                            <button type="button" class="btn btn-success btn-sm" id="playNotification"><i
+                                    class="fas fa-play fa-lg"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveSettings">Save changes</button>
                 </div>
             </div>
         </div>
@@ -36,6 +70,10 @@
     <script src="lib/js/jquery-3.5.1.min.js"></script>
     <script src="lib/js/bootstrap.bundle.min.js"></script>
 
+    <script src="lib/js/solid.min.js"></script>
+    <script src="lib/js/fontawesome.min.js"></script>
+
     <script src="popup.js"></script>
 </body>
+
 </html>

@@ -149,9 +149,9 @@ stop = function() {
     }
 }
 
-var turboTimeAudio = new Audio(chrome.runtime.getURL("audio/turbo-time.mp3"));
-var cookieDownAudio = new Audio(chrome.runtime.getURL("audio/put-cookie-down.mp3"));
-var motionTrackerAudio = new Audio(chrome.runtime.getURL("audio/motion-tracker.mp3"));
+var turboTimeAudio = new Audio(chrome.runtime.getURL("audio/turbo-time.wav"));
+var cookieDownAudio = new Audio(chrome.runtime.getURL("audio/put-cookie-down.wav"));
+var motionTrackerAudio = new Audio(chrome.runtime.getURL("audio/motion-tracker.wav"));
 var arnoldAlerts = true;
 
 let updateAlertType = function() {
